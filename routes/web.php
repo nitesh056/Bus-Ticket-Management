@@ -11,6 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'IndexController@index');
+
+Route::resource('fleet','FleetController', ['except' => 'create', 'show']);
+
+Route::resource('vehicle','VehicleController');
+
+Route::resource('route','RouteController');
+
+Route::resource('trip','TripController');
+
+Route::resource('ticket','TicketController');
+
+Auth::routes();

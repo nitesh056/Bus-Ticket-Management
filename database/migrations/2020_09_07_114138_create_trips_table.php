@@ -15,7 +15,12 @@ class CreateTripsTable extends Migration
     {
         Schema::create('trips', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
+            $table->unsignedBigInteger('route_id');
+            $table->date('departure_date');
+            $table->unsignedBigInteger('vehicle_id');
+            $table->float('price', 10, 2);
+            $table->foreign('route_id')->references('id')->on('routes');
+            $table->foreign('vehicle_id')->references('id')->on('vehicles');
         });
     }
 

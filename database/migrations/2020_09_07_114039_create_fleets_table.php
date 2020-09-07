@@ -15,7 +15,8 @@ class CreateFleetsTable extends Migration
     {
         Schema::create('fleets', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
+            $table->string('fleet_type');
+            $table->integer('total_seat');
         });
     }
 
