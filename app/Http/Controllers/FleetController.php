@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Fleet;
 
 class FleetController extends Controller
 {
@@ -13,17 +14,8 @@ class FleetController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $fleetTypes = Fleet::all();
+        return view('dashboard.fleet', compact('fleetTypes'));
     }
 
     /**
@@ -31,32 +23,21 @@ class FleetController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     * $table->bigIncrements('id');
+*            // $table->string('fleet_type');
+ *           // $table->integer('total_seat');
      */
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        $this->validate($request, [
+            'fleet' => 'required',
+            'seat' => 'required'
+        ]);
+        $fleetTypes = new Fleet();
+        $fleetTypes->fleet_type = $request->input('fleet');
+        $fleetTypes->total_seat = $request->input('seat');
+        $fleetTypes->save();
+        return redirect('/fleets');
     }
 
     /**
@@ -68,7 +49,15 @@ class FleetController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'fleetEdit' => 'required',
+            'seatEdit' => 'required'
+        ]);
+        $fleetTypes = Fleet::find($id);
+        $fleetTypes->fleet_type = $request->input('fleetEdit');
+        $fleetTypes->total_seat = $request->input('seatEdit');
+        $fleetTypes->save();
+        return redirect('/fleets');
     }
 
     /**
@@ -79,6 +68,8 @@ class FleetController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $fleetTypes = Fleet::find($id);
+        $fleetTypes->delete();
+        return redirect('/fleets');
     }
 }

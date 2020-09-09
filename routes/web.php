@@ -13,14 +13,14 @@
 
 Route::get('/', 'IndexController@index');
 
-Route::resource('fleet','FleetController', ['except' => 'create', 'show']);
+Route::resource('fleets','FleetController', ['except' => 'create', 'show', 'edit']);
 
-Route::resource('vehicle','VehicleController');
+Route::resource('vehicles','VehicleController');
 
-Route::resource('route','RouteController');
+Route::resource('routes','RouteController');
 
-Route::resource('trip','TripController');
+Route::resource('trips','TripController');
 
-Route::resource('ticket','TicketController');
+Route::resource('tickets','TicketController');
 
 Auth::routes();
