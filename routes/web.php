@@ -15,7 +15,7 @@ Route::get('/', 'IndexController@index');
 
 Route::resource('fleets','FleetController', ['except' => 'create', 'show', 'edit']);
 
-Route::resource('vehicles','VehicleController');
+Route::resource('vehicles','VehicleController', ['except' => 'create', 'show', 'edit']);
 
 Route::resource('routes','RouteController');
 

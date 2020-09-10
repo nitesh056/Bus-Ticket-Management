@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Fleet;
+use App\Vehicle;
 
 class FleetController extends Controller
 {
@@ -23,9 +24,6 @@ class FleetController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
-     * $table->bigIncrements('id');
-*            // $table->string('fleet_type');
- *           // $table->integer('total_seat');
      */
     public function store(Request $request)
     {
@@ -69,6 +67,10 @@ class FleetController extends Controller
     public function destroy($id)
     {
         $fleetTypes = Fleet::find($id);
+        $vehicles = Vehicle::where('fleet_id', $id)->get();
+        foreach($vehicles as $vehicle){
+            $vehicle->delete();
+        }
         $fleetTypes->delete();
         return redirect('/fleets');
     }

@@ -16,7 +16,7 @@ class CreateVehiclesTable extends Migration
         Schema::create('vehicles', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('vehicle');
-            $table->enum('status', array('availabe', 'booked'));
+            $table->enum('status', array('available', 'booked'));
             $table->unsignedBigInteger('fleet_id');
             $table->foreign('fleet_id')->references('id')->on('fleets');
         });

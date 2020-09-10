@@ -48,10 +48,6 @@
 								<input class="btn btn-danger" type="submit" value="Delete">
 							</form>
 						</td>
-						{{-- @if(!Auth::guest())
-							<td><a href="/products/{{$product->id}}/edit" class="btn btn-primary btn-sm">Edit</a>
-							<a href="/products/{{$product->id}}/delete" class="btn btn-primary btn-sm d-sm-inline-block">Delete</a></td>
-						@endif --}}
 					</tr>
 				@endforeach
 			</tbody>
