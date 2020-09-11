@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Trip;
+use App\Route;
+use App\Vehicle;
 
 class TripController extends Controller
 {
@@ -13,17 +16,10 @@ class TripController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $trips = Trip::all();
+        $routes = Route::all();
+        $vehicles = Vehicle::all();
+        return view('dashboard.trip', compact('trips', 'routes', 'vehicles'));
     }
 
     /**
@@ -34,29 +30,20 @@ class TripController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $this->validate($request, [
+            'routeName' => 'required',
+            'date' => 'required',
+            'vehicle' => 'required',
+            'price' => 'required'
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        $trips = new Trip();
+        $trips->route_id = $request->input('routeName');
+        $trips->departure_date = $request->input('date');
+        $trips->vehicle_id = $request->input('vehicle');
+        $trips->price = $request->input('price');
+        $trips->save();
+        return redirect('/trips');
     }
 
     /**
@@ -68,7 +55,20 @@ class TripController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'routeNameEdit' => 'required',
+            'dateEdit' => 'required',
+            'vehicleEdit' => 'required',
+            'priceEdit' => 'required'
+        ]);
+
+        $trips = Trip::find($id);
+        $trips->route_id = $request->input('routeNameEdit');
+        $trips->departure_date = $request->input('dateEdit');
+        $trips->vehicle_id = $request->input('vehicleEdit');
+        $trips->price = $request->input('priceEdit');
+        $trips->save();
+        return redirect('/trips');
     }
 
     /**
@@ -79,6 +79,8 @@ class TripController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $trip = Trip::find($id);
+        $trip->delete();
+        return redirect('/trips');
     }
 }

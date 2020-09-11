@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Fleet;
 use App\Vehicle;
+use App\Trip;
 
 class FleetController extends Controller
 {
@@ -69,6 +70,10 @@ class FleetController extends Controller
         $fleetTypes = Fleet::find($id);
         $vehicles = Vehicle::where('fleet_id', $id)->get();
         foreach($vehicles as $vehicle){
+            $trips = Trip::where('vehicle_id', $vehicle->id)->get();
+            foreach ($trips as $trip) {
+                $trip->delete();
+            }
             $vehicle->delete();
         }
         $fleetTypes->delete();

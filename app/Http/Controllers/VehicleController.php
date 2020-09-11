@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Vehicle;
 use App\Fleet;
+use App\Trip;
 
 class VehicleController extends Controller
 {
@@ -71,6 +72,10 @@ class VehicleController extends Controller
     public function destroy($id)
     {
         $vehicle = Vehicle::find($id);
+        $trips = Trip::where('vehicle_id', $vehicle->id)->get();
+        foreach ($trips as $trip) {
+            $trip->delete();
+        }
         $vehicle->delete();
         return redirect('/vehicles');
     }

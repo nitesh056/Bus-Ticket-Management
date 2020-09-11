@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Route;
+use App\Trip;
 
 class RouteController extends Controller
 {
@@ -70,6 +71,10 @@ class RouteController extends Controller
     public function destroy($id)
     {
         $route = Route::find($id);
+        $trips = Trip::where('route_id', $route->id)->get();
+        foreach ($trips as $trip) {
+            $trip->delete();
+        }
         $route->delete();
         return redirect('/routes');
     }

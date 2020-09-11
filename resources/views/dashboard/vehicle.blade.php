@@ -68,7 +68,7 @@
                 	actionAttValue = "/vehicles/"+id;
                 	$('#editForm').attr("action", actionAttValue);
                 	$('#vehicleEdit').attr("value", vehicle);
-                    $('#fleetTypeEdit>option[value="2"]').attr('selected', 'selected');
+                    $('#fleetTypeEdit>option[value="'+fleat_id+'"]').attr('selected', 'selected');
                 	$('#editForm>button').text("Edit " + vehicle);
                 	$('#editForm').show(100);
                 }
