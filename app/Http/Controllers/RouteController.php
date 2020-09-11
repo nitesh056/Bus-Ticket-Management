@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Route;
 
 class RouteController extends Controller
 {
@@ -13,17 +14,8 @@ class RouteController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $routes = Route::all();
+        return view('dashboard.route', compact('routes'));
     }
 
     /**
@@ -34,29 +26,17 @@ class RouteController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        $this->validate($request, [
+            'sPoint' => 'required',
+            'dPoint' => 'required',
+            'distance' => 'required'
+        ]);
+        $route = new Route();
+        $route->starting_point = $request->input('sPoint');
+        $route->destination_point = $request->input('dPoint');
+        $route->distance = $request->input('distance');
+        $route->save();
+        return redirect('/routes');
     }
 
     /**
@@ -68,7 +48,17 @@ class RouteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'sPointEdit' => 'required',
+            'dPointEdit' => 'required',
+            'distanceEdit' => 'required'
+        ]);
+        $route = Route::find($id);
+        $route->starting_point = $request->input('sPointEdit');
+        $route->destination_point = $request->input('dPointEdit');
+        $route->distance = $request->input('distanceEdit');
+        $route->save();
+        return redirect('/routes');
     }
 
     /**
@@ -79,6 +69,8 @@ class RouteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $route = Route::find($id);
+        $route->delete();
+        return redirect('/routes');
     }
 }
