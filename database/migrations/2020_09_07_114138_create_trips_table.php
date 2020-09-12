@@ -19,6 +19,7 @@ class CreateTripsTable extends Migration
             $table->date('departure_date');
             $table->unsignedBigInteger('vehicle_id');
             $table->float('price', 10, 2);
+            $table->integer('available_seats');
             $table->foreign('route_id')->references('id')->on('routes');
             $table->foreign('vehicle_id')->references('id')->on('vehicles');
         });

@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Route;
+use App\Fleet;
+use App\Trip;
+use App\Vehicle;
 
 class TicketController extends Controller
 {
@@ -13,17 +17,33 @@ class TicketController extends Controller
      */
     public function index()
     {
-        //
+        $routes = Route::all();
+        $fleets = Fleet::all();
+        return view('dashboard.ticket', compact('routes', 'fleets'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Checks for the trips.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function checkTicket(Request $request)
     {
-        //
+        $booking = $request->input('bookingDate');
+        $route = +$request->input('route');
+        $fleet = +$request->input('fleet');
+        $trips = Trip::where([
+            ['departure_date', '=', $booking],
+            ['route_id', '=', $route]
+        ])->get();
+        $listTickets = [];
+        foreach ($trips as $trip) {
+            if ($trip->vehicle->fleet_id == $fleet && $trip->vehicle->status == "available") {
+                array_push($listTickets, $trip);
+            }
+        }
+        return response()->json(array('messages'=> $listTickets), 200);
     }
 
     /**

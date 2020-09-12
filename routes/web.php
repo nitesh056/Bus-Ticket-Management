@@ -21,6 +21,7 @@ Route::resource('routes','RouteController');
 
 Route::resource('trips','TripController');
 
+Route::post('/tickets/check','TicketController@checkTicket');
 Route::resource('tickets','TicketController');
 
 Auth::routes();

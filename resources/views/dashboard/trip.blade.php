@@ -56,6 +56,7 @@
                         <th>Vehicle</th>
                         <th>Departure Date</th>
                         <th>Price</th>
+                        <th>Availabe seats</th>
                         <th>Edit</th>
                     </tr>
                 </thead>
@@ -67,6 +68,7 @@
                             <td>{{$trip->vehicle->vehicle}}</td>
                             <td>{{$trip->departure_date}}</td>
                             <td>{{$trip->price}}</td>
+                            <td>{{$trip->available_seats}}</td>
                             <td>
                                 <button class="btn btn-primary" onclick="showForm({{$trip->id}}, {{$trip->route_id}}, {{$trip->vehicle_id}}, {{$trip->price}})">edit</button>
                                 <form action="/trips/{{$trip->id}}" method="post" style="display: inline">

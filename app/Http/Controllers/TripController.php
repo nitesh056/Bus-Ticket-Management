@@ -42,6 +42,7 @@ class TripController extends Controller
         $trips->departure_date = $request->input('date');
         $trips->vehicle_id = $request->input('vehicle');
         $trips->price = $request->input('price');
+        $trips->available_seats = $trips->vehicle->fleet->total_seat;
         $trips->save();
         return redirect('/trips');
     }
