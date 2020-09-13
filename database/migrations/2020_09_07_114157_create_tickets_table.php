@@ -16,8 +16,11 @@ class CreateTicketsTable extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('trip_id');
-            $table->integer('No_of_passenger');
+            $table->unsignedBigInteger('user_id');
+            $table->integer('no_of_passenger');
+            $table->float('amount', 8,2);
             $table->foreign('trip_id')->references('id')->on('trips');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

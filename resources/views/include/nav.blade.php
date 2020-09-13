@@ -14,6 +14,7 @@
                 <li class="nav-item"><a href="/vehicles" class="nav-link">Vehicles</a></li>
                 <li class="nav-item"><a href="/routes" class="nav-link">Routes</a></li>
                 <li class="nav-item"><a href="/trips" class="nav-link">Trip</a></li>
+                <li class="nav-item"><a href="/tickets" class="nav-link">Ticket</a></li>
             </ul>
 
             <!-- Right Side Of Navbar -->

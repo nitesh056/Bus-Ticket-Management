@@ -7,6 +7,7 @@ use App\Route;
 use App\Fleet;
 use App\Trip;
 use App\Vehicle;
+use App\Ticket;
 
 class TicketController extends Controller
 {
@@ -17,9 +18,20 @@ class TicketController extends Controller
      */
     public function index()
     {
+        $tickets = Ticket::all();
+        return view('dashboard.ticket', compact('tickets'));
+    }
+
+    /**
+     * Show the form for booking Ticket.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function bookTicket()
+    {
         $routes = Route::all();
         $fleets = Fleet::all();
-        return view('dashboard.ticket', compact('routes', 'fleets'));
+        return view('dashboard.bookTicket', compact('routes', 'fleets'));
     }
 
     /**
@@ -39,7 +51,7 @@ class TicketController extends Controller
         ])->get();
         $listTickets = [];
         foreach ($trips as $trip) {
-            if ($trip->vehicle->fleet_id == $fleet && $trip->vehicle->status == "available") {
+            if ($trip->vehicle->fleet_id == $fleet && $trip->available_seats>0) {
                 array_push($listTickets, $trip);
             }
         }
@@ -54,7 +66,21 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'trip' => 'required',
+            'no_of_tickets' => 'required'
+        ]);
+
+        $ticket = new Ticket();
+        $ticket->trip_id = $request->input('trip');
+        $ticket->user_id = auth()->user()->id;
+        $ticket->no_of_passenger = $request->input('no_of_tickets');
+        $trip = Trip::find($ticket->trip_id);
+        $ticket->amount = $trip->price * $request->input('no_of_tickets');
+        $trip->available_seats = $trip->available_seats - $ticket->no_of_passenger;
+        $ticket->save();
+        $trip->save();
+        return redirect('/tickets');
     }
 
     /**
@@ -88,7 +114,7 @@ class TicketController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
     }
 
     /**
@@ -99,6 +125,6 @@ class TicketController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 }

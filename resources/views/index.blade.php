@@ -8,7 +8,7 @@
 				<a href="/register" class="btn btn-outline-primary">Register</a>
 				<br>
 			@else
-				<a href="/tickets" class="btn btn-outline-primary">Book Ticket</a>
+				<a href="/tickets/book" class="btn btn-outline-primary">Book Ticket</a>
 			@endif
 		</div>
 	</main>

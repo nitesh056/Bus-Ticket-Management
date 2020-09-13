@@ -17,11 +17,12 @@ Route::resource('fleets','FleetController', ['except' => 'create', 'show', 'edit
 
 Route::resource('vehicles','VehicleController', ['except' => 'create', 'show', 'edit']);
 
-Route::resource('routes','RouteController');
+Route::resource('routes','RouteController', ['except' => 'create', 'show', 'edit']);
 
-Route::resource('trips','TripController');
+Route::resource('trips','TripController', ['except' => 'create', 'show', 'edit']);
 
 Route::post('/tickets/check','TicketController@checkTicket');
+Route::get('/tickets/book', 'TicketController@bookTicket');
 Route::resource('tickets','TicketController');
 
 Auth::routes();
