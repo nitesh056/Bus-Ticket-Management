@@ -36,7 +36,6 @@ class VehicleController extends Controller
 
         $vehicle = new Vehicle();
         $vehicle->vehicle = $request->input('vehicle');
-        $vehicle->status = 'available';
         $vehicle->fleet_id = $request->input('fleet_type');
         $vehicle->save();
         return redirect('/vehicles');

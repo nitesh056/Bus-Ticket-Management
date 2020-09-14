@@ -38,7 +38,6 @@
                     <tr>
                         <th>Id</th>
                         <th>Vehicles</th>
-                        <th>Status</th>
                         <th>Fleet Type</th>
                         <th>Edit</th>
                     </tr>
@@ -48,7 +47,6 @@
                         <tr>
                             <td>{{$vehicle->id}}</td>
                             <td>{{$vehicle->vehicle}}</td>
-                            <td>{{$vehicle->status}}</td>
                             <td>{{$vehicle->fleet->fleet_type}}</td>
                             <td>
                                 <button class="btn btn-primary" onclick="showForm({{$vehicle->id}}, '{{$vehicle->vehicle}}', {{$vehicle->fleet_id}})">edit</button>

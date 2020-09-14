@@ -66,55 +66,25 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
+        $trip = Trip::find($request->input('trip'));
+
         $this->validate($request, [
             'trip' => 'required',
-            'no_of_tickets' => 'required'
+            'no_of_tickets' => 'required|gt:0|lte:'.$trip->available_seats
+        ],[
+            'no_of_tickets.lte' => 'Please enter less than the available seat'
         ]);
 
         $ticket = new Ticket();
         $ticket->trip_id = $request->input('trip');
         $ticket->user_id = auth()->user()->id;
         $ticket->no_of_passenger = $request->input('no_of_tickets');
-        $trip = Trip::find($ticket->trip_id);
+        
         $ticket->amount = $trip->price * $request->input('no_of_tickets');
         $trip->available_seats = $trip->available_seats - $ticket->no_of_passenger;
         $ticket->save();
         $trip->save();
         return redirect('/tickets');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        
     }
 
     /**

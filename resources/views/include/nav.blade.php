@@ -10,11 +10,18 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a href="/fleets" class="nav-link">Fleets</a></li>
-                <li class="nav-item"><a href="/vehicles" class="nav-link">Vehicles</a></li>
-                <li class="nav-item"><a href="/routes" class="nav-link">Routes</a></li>
-                <li class="nav-item"><a href="/trips" class="nav-link">Trip</a></li>
-                <li class="nav-item"><a href="/tickets" class="nav-link">Ticket</a></li>
+                @guest 
+                @else
+                    @if (auth()->user()->role == "admin")
+                        <li class="nav-item"><a href="/fleets" class="nav-link">Fleets</a></li>
+                        <li class="nav-item"><a href="/vehicles" class="nav-link">Vehicles</a></li>
+                        <li class="nav-item"><a href="/routes" class="nav-link">Routes</a></li>
+                        <li class="nav-item"><a href="/trips" class="nav-link">Trip</a></li>
+                        <li class="nav-item"><a href="/tickets" class="nav-link">Ticket</a></li>
+                    @else
+                        <li class="nav-item"><a href="/tickets/book" class="nav-link">Book Ticket</a></li>
+                    @endif
+                @endguest
             </ul>
 
             <!-- Right Side Of Navbar -->

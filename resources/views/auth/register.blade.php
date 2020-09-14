@@ -40,12 +40,15 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Phone') }}</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Role') }}</label>
 
                             <div class="col-md-6">
-                                <input id="phone" type="number" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone">
-
-                                @error('phone')
+                                <div class="form-check" id="radioOption">
+                                    <input class='form-check-input' type='radio' name='role' value='admin'>Admin<br>
+                                    <input class='form-check-input' type='radio' name='role' value='customer'>Customer
+                                </div>
+                                
+                                @error('role')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
