@@ -7,7 +7,9 @@
             @csrf
             <input type="text" class="form-control mr-sm-2" placeholder="Fleet Type" name="fleet">
 
-            <input type="number" class="form-control mr-sm-2" placeholder="Total Seat" name="seat">
+			<input type="number" class="form-control mr-sm-2" placeholder="Number of row of seat" name="seat_row">
+			
+			<input type="number" class="form-control mr-sm-2" placeholder="Number of column of seat" name="seat_column">
 
             <button type="submit" class="btn btn-primary">Add</button>
 		</form>
@@ -18,7 +20,9 @@
 
 			<input type="text" class="form-control mr-sm-2" id="fleetEdit" name="fleetEdit">
 
-            <input type="number" class="form-control mr-sm-2" id="seatEdit" name="seatEdit">
+			<input type="number" class="form-control mr-sm-2" id="rowEdit" name="rowEdit">
+			
+			<input type="number" class="form-control mr-sm-2" id="colEdit" name="colEdit">
 			
             <button type="submit" class="btn btn-primary">Edit</button>
 		</form>
@@ -30,7 +34,8 @@
 				<tr>
 					<th>Id</th>
 					<th>Fleet Type</th>
-					<th>No. of seat</th>
+					<th>Row of seat</th>
+					<th>Column of seat</th>
 					<th>Edit</th>
 				</tr>
 			</thead>
@@ -39,9 +44,10 @@
 					<tr>
 						<td>{{$fleetType->id}}</td>
                         <td>{{$fleetType->fleet_type}}</td>
-						<td>{{$fleetType->total_seat}}</td>
+						<td>{{$fleetType->Seat_Row}}</td>
+						<td>{{$fleetType->Seat_Column}}</td>
 						<td>
-							<button class="btn btn-primary" onclick="showForm({{$fleetType->id}}, '{{$fleetType->fleet_type}}', {{$fleetType->total_seat}})">edit</button>
+							<button class="btn btn-primary" onclick="showForm({{$fleetType->id}}, '{{$fleetType->fleet_type}}', {{$fleetType->Seat_Row}}, {{$fleetType->Seat_Column}})">edit</button>
 							<form action="/fleets/{{$fleetType->id}}" method="post" style="display: inline">
 								@csrf
 								<input name="_method" type="hidden" value="DELETE">
@@ -54,11 +60,12 @@
 		</table>
 		<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 		<script defer>
-			function showForm(num, type, seat) {
+			function showForm(num, type, row, col) {
 				actionAttValue = "/fleets/"+num;
 				$('#editForm').attr("action", actionAttValue);
 				$('#fleetEdit').attr("value", type);
-				$('#seatEdit').attr("value", seat);
+				$('#rowEdit').attr("value", row);
+				$('#colEdit').attr("value", col);
 				$('#editForm>button').text("Edit " + type);
 				$('#editForm').show(100);
 			}

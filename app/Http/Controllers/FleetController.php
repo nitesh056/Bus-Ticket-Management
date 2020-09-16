@@ -30,11 +30,13 @@ class FleetController extends Controller
     {
         $this->validate($request, [
             'fleet' => 'required',
-            'seat' => 'required'
+            'seat_row' => 'required',
+            'seat_column' => 'required'
         ]);
         $fleetTypes = new Fleet();
         $fleetTypes->fleet_type = $request->input('fleet');
-        $fleetTypes->total_seat = $request->input('seat');
+        $fleetTypes->Seat_Row = $request->input('seat_row');
+        $fleetTypes->Seat_Column = $request->input('seat_column');
         $fleetTypes->save();
         return redirect('/fleets');
     }
@@ -50,11 +52,13 @@ class FleetController extends Controller
     {
         $this->validate($request, [
             'fleetEdit' => 'required',
-            'seatEdit' => 'required'
+            'rowEdit' => 'required',
+            'colEdit' => 'required'
         ]);
         $fleetTypes = Fleet::find($id);
         $fleetTypes->fleet_type = $request->input('fleetEdit');
-        $fleetTypes->total_seat = $request->input('seatEdit');
+        $fleetTypes->Seat_Row = $request->input('rowEdit');
+        $fleetTypes->Seat_Column = $request->input('colEdit');
         $fleetTypes->save();
         return redirect('/fleets');
     }

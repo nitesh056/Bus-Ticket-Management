@@ -19,6 +19,7 @@ class CreateTicketsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->integer('no_of_passenger');
             $table->float('amount', 8,2);
+            $table->text('allocated_seats');
             $table->foreign('trip_id')->references('id')->on('trips');
             $table->foreign('user_id')->references('id')->on('users');
         });

@@ -52,10 +52,15 @@ class TicketController extends Controller
         $listTickets = [];
         foreach ($trips as $trip) {
             if ($trip->vehicle->fleet_id == $fleet && $trip->available_seats>0) {
+                $trip['row'] = $trip->vehicle->fleet->Seat_Row;
+                $trip['column'] = $trip->vehicle->fleet->Seat_Column;
                 array_push($listTickets, $trip);
             }
         }
-        return response()->json(array('messages'=> $listTickets), 200);
+        $data = [
+            'listTickets' => $listTickets
+        ];
+        return response()->json($data, 200);
     }
 
     /**
@@ -67,21 +72,20 @@ class TicketController extends Controller
     public function store(Request $request)
     {
         $trip = Trip::find($request->input('trip'));
-
+        $new_allocated_seat = array_sum($request->input('new_allocated_seats'));
         $this->validate($request, [
             'trip' => 'required',
-            'no_of_tickets' => 'required|gt:0|lte:'.$trip->available_seats
-        ],[
-            'no_of_tickets.lte' => 'Please enter less than the available seat'
         ]);
 
         $ticket = new Ticket();
         $ticket->trip_id = $request->input('trip');
         $ticket->user_id = auth()->user()->id;
-        $ticket->no_of_passenger = $request->input('no_of_tickets');
+        $ticket->no_of_passenger = $new_allocated_seat;
+        $ticket->amount = $trip->price * $new_allocated_seat;
+        $ticket->allocated_seats = $request->input('new_allocated_seats');
         
-        $ticket->amount = $trip->price * $request->input('no_of_tickets');
-        $trip->available_seats = $trip->available_seats - $ticket->no_of_passenger;
+        $trip->allocated_seats = $request->input('all_allocated_seats');
+        $trip->available_seats = $trip->available_seats - $new_allocated_seat;
         $ticket->save();
         $trip->save();
         return redirect('/tickets');
