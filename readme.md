@@ -1,4 +1,4 @@
-# Larastock
+# Bus-Ticket-Management
 
 ## Installation Guide
 
